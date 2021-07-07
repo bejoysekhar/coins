@@ -1,6 +1,5 @@
 package com.adp.coins.service;
 
-import com.adp.coins.dto.Change;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -8,23 +7,22 @@ import java.util.*;
 @Component
 public class CoinCollection {
 
-    private static final Integer quarter = 25;
-    private static final Integer noQuarter = 100;
-    private static final Integer dime = 10;
-    private static final Integer noDime = 100;
-    private static final Integer nickel = 5;
-    private static final Integer noNickel = 100;
-    private static final Integer penny = 1;
-    private static final Integer noPenny = 100;
+    private final Integer quarter = 25;
+    private final Integer noOfQuarters = 100;
+    private final Integer dime = 10;
+    private final Integer noOfDimes = 100;
+    private final Integer nickel = 5;
+    private final Integer noOfNickels = 100;
+    private final Integer penny = 1;
+    private final Integer noOfPennys = 100;
 
-    private static Map<Integer, Integer> coinMap = new HashMap<>();
+    private Map<Integer, Integer> coinMap = new HashMap<>();
 
-    static {
-        coinMap.put(quarter, noQuarter);
-        coinMap.put(dime, noDime);
-        coinMap.put(nickel, noNickel);
-        coinMap.put(penny, noPenny);
-
+    public CoinCollection(){
+        coinMap.put(quarter, noOfQuarters);
+        coinMap.put(dime, noOfDimes);
+        coinMap.put(nickel, noOfNickels);
+        coinMap.put(penny, noOfPennys);
     }
 
 
@@ -59,5 +57,20 @@ public class CoinCollection {
         return noOfCoinsLeft;
 
     }
+
+    public void overrideCoinMap(Integer noOfQuarters, Integer noOfDimes, Integer noOfNickels, Integer noOfPennys){
+        coinMap.replace(quarter, noOfQuarters);
+        coinMap.replace(dime, noOfDimes);
+        coinMap.replace(nickel, noOfNickels);
+        coinMap.replace(penny, noOfPennys);
+    }
+
+    public void setDefaultCoinMap(){
+        coinMap.replace(quarter, noOfQuarters);
+        coinMap.replace(dime, noOfDimes);
+        coinMap.replace(nickel, noOfNickels);
+        coinMap.replace(penny, noOfPennys);
+    }
+
 
 }

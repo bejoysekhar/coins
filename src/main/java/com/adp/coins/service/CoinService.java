@@ -1,14 +1,12 @@
 package com.adp.coins.service;
 
 import com.adp.coins.dto.Change;
-import com.adp.coins.exception.NotEnoughCoinException;
+import com.adp.coins.exception.CoinException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CoinService {
@@ -23,6 +21,9 @@ public class CoinService {
             Integer highestCoin = 0;
             Integer coinsLeft=0;
             if((highestCoin = cc.getHighestCoinLeft()) > 0) {
+                if(amount < highestCoin){
+                    throw new CoinException("Invalid Amount");
+                }
                 Integer noOfCoinsRequired = amount / highestCoin;
                 if((coinsLeft = cc.reduceNumberOfCoins(highestCoin, noOfCoinsRequired)) >=0){
                     changeList.add(new Change(highestCoin, noOfCoinsRequired));
@@ -33,7 +34,7 @@ public class CoinService {
                     amount = highestCoin * coinsLeft;
                 }
             }else{
-                throw new NotEnoughCoinException("Not Enough Coin");
+                throw new CoinException("Not Enough Coin");
             }
         }
 
