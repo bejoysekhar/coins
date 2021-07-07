@@ -2,6 +2,7 @@ package com.adp.coins.controller;
 
 import com.adp.coins.dto.Change;
 import com.adp.coins.service.CoinService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/coin")
+@RequestMapping("/coin")
 public class CoinController {
 
     private CoinService coinService;
@@ -19,8 +20,8 @@ public class CoinController {
         this.coinService = coinService;
     }
 
-    @GetMapping("/change/{amount}")
-    public List<Change> change(@PathParam("amount") Integer amount){
-        return coinService.changeService(amount * 100);
+    @GetMapping("/change")
+    public ResponseEntity<List<Change>> change(@PathParam("amount") Integer amount){
+        return ResponseEntity.ok().body(coinService.changeService(amount * 100));
     }
 }
